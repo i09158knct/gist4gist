@@ -1,0 +1,48 @@
+body {
+  padding-top: 60px;
+  padding-left: 5px;
+}
+.line-numbers pre, .line-contents pre {
+  white-space: pre;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.line-contents {
+  padding-left: 0;
+}
+
+.line-numbers {
+  padding: 0
+}
+
+.line-numbers pre {
+  padding: 1px 4px;
+  text-align: right;
+}
+
+.line-contents pre {
+  padding: 1px 0;
+  margin-right: 1px;
+  background-color: white;
+}
+
+.line-contents pre div {
+  padding-left: 5px;
+}
+
+.file-content {
+  padding: 0;
+  overflow-x: auto;
+  border: solid 1px #eee;
+}
+
+
+
+.line {
+  display: inline-block;
+}
+
+.highlighted {
+  background-color: #ffffcc
+}

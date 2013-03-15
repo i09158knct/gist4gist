@@ -1,0 +1,9 @@
+<ul class="pager">
+  <li class="previous">
+    <a href="#/<%- thisGistId %>/<%- currentSectionNumber - 1 %>">&larr; Previous</a>
+  </li>
+  <li class="next<%- length < currentSectionNumber + 1 ? ' disabled' : '' %>">
+    <a href="#/<%- thisGistId %>/<%- currentSectionNumber + 1 %>">Next &rarr;</a>
+  </li>
+</ul>
+<%= el.innerHTML %>
