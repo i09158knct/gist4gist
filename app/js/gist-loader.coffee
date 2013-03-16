@@ -11,5 +11,5 @@ define 'gist-loader', [
       @_loader url, (res) ->
         remaining = res.meta["X-RateLimit-Remaining"]
         console.log "Remaining Rate: #{remaining}"
-        alert '0!!!!' if remaining == 0
+        alert '0!!!!' if +remaining == 0
         cb? arguments...

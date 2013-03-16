@@ -3,8 +3,8 @@ define 'models/explanation', [
   'underscore'
   'backbone'
   'markdown-gist-parser'
-  'gist-loader'
   # 'gist-loader-mock'
+  'gist-loader'
 ], ($, _, Backbone, mdgParser, GistLoader) ->
   loader = new GistLoader()
 
@@ -14,10 +14,16 @@ define 'models/explanation', [
       @attributes = mdgParser.parse markdown
       @_thisGistId = thisGistId
 
-      head = @getHead()
+      head = @attributes.head
       waste = $(head.el).find('h1')
-      if waste.text().trim() == @getTargetId()
-        waste.remove()
+      waste.remove()
+
+      sections = @attributes.sections
+      for section in sections
+        ul = Explanation.buildHtmlTargetList section.targetList
+        $plainUl = $(section.el).find('h2').eq(0).next()
+        if $plainUl[0].tagName.toLowerCase() == 'ul'
+          $plainUl.replaceWith(ul)
 
     getGistId: () ->
       @_thisGistId
@@ -34,6 +40,32 @@ define 'models/explanation', [
         @attributes.sections[number - 1]
       else
         @getHead()
+
+    @buildHtmlListItem: (targetName, lines) ->
+      validName = targetName.replace(/\./g, '-').trim()
+      fileId = "gist-#{validName}"
+      fileButton =
+        "<button class=\"js-file-link btn btn-link\" data-target=\"#{fileId}\">" +
+        targetName +
+        '</button>'
+      lineId = (line) -> "#{validName}-#{line}"
+      lineButtons = for line in lines
+        "<button class=\"js-line-link btn btn-small\" data-target=\"#{lineId(line)}\">" +
+        line +
+        '</button>'
+      li =
+        '<li>' + fileButton + ' : ' + lineButtons.join(' ') + '</li>'
+
+    @buildHtmlTargetList: (targetList) ->
+      lis = for target in targetList
+
+        # target is simple object like key-value pair.
+        # Therefore, returned value of for-of will always be 1 element array.
+        [li] = for targetName, lines of target
+          @buildHtmlListItem targetName, lines
+        li
+
+      ul = '<ul class="target-list">' + lis.join('') + '</ul>'
 
 
     @create: (data, fileName='explanation.md') ->

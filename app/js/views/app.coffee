@@ -18,8 +18,8 @@ define 'views/app', [
     el: 'body'
 
     render: (sectionNumber) ->
-      @$('#target-gist').html @gist.render().el
-      @$('#explanation').html @explanation.render(sectionNumber).el
+      @gist.render().el
+      @explanation.render(sectionNumber).el
       @
 
     changeGist: (id, sectionNumber) ->
@@ -28,8 +28,10 @@ define 'views/app', [
       @$('#app-message').text 'Loading...'
       Explanation.createAsync id, (explModel) =>
         @explanation = new ExplanationView(model: explModel)
+        @explanation.setElement @$('#explanation')
         targetId = explModel.getTargetId()
         Gist.createAsync targetId, (gistModel) =>
           $('#app-message').text ''
           @gist = new GistView(model: gistModel)
+          @gist.setElement @$('#target-gist')
           @render sectionNumber
