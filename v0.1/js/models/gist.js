@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __slice = [].slice;
 
-  define('models/gist', ['jquery', 'underscore', 'backbone', 'gist-loader-mock'], function($, _, Backbone, GistLoader) {
+  define('models/gist', ['jquery', 'underscore', 'backbone', 'gist-loader'], function($, _, Backbone, GistLoader) {
     var Gist, loader;
     loader = new GistLoader();
     return Gist = (function(_super) {
