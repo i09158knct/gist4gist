@@ -36,7 +36,12 @@ define 'markdown-gist-parser', [
   extractTargetList: (ul) ->
     [lis...] = ul.children
     lis.map (li) =>
-      [__all, fileName, lineNumbers] = li.innerText.match @findNameAndLineNumbers
+      if li.innerText?
+        [__all, fileName, lineNumbers] = li.innerText.match @findNameAndLineNumbers
+      else if li.textContent?
+        [__all, fileName, lineNumbers] = li.textContent.match @findNameAndLineNumbers
+      else
+        throw new Error('Cannot use "innerText" and "textContent".')
       target = {}
       target[fileName] = JSON.parse lineNumbers
       target
