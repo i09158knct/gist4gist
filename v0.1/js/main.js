@@ -28,15 +28,23 @@
     }
   });
 
-  require(['jquery', 'routers/app', 'models/gist', 'views/gist', 'views/navbar', 'lib/bootstrap.min'], function($, AppRouter, Gist, GistView, NavbarView) {
-    var router;
+  require(['jquery', 'routers/app', 'lib/bootstrap.min'], function($, AppRouter) {
+    var $explanation, $targetGist, resizeElements, router, sizeHolder;
     router = new AppRouter({
       pushState: true
     });
     Backbone.history.start();
-    window.Gist = Gist;
-    window.GistView = GistView;
-    window.NavbarView = NavbarView;
+    sizeHolder = document.documentElement;
+    $targetGist = $('#target-gist');
+    $explanation = $('#explanation');
+    resizeElements = function() {
+      var height;
+      height = sizeHolder.clientHeight - 80;
+      $targetGist.height(height);
+      return $explanation.height(height);
+    };
+    $(window).on('resize', resizeElements);
+    resizeElements();
     return window.router = router;
   });
 

@@ -27,7 +27,7 @@
           event.preventDefault();
         }
         id = this.$('#gist-id').val();
-        return document.location.hash = '/' + id;
+        return document.location.hash = "/" + id;
       };
 
       return GistView;

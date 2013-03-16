@@ -30,18 +30,20 @@
       };
 
       ExplanationView.prototype.renderSection = function(sectionNumber) {
-        var aaaaa, el, fileName, length, line, lines, section, target, targetList, _i, _j, _len, _len1;
+        var el, fileName, idPrefix, length, line, lines, target, targetList, _i, _j, _len, _len1, _ref;
         length = this.model.get('sections').length;
-        section = this.model.getSection(sectionNumber);
-        el = section.el, targetList = section.targetList;
+        if (sectionNumber > length) {
+          sectionNumber = length;
+        }
+        _ref = this.model.getSection(sectionNumber), el = _ref.el, targetList = _ref.targetList;
         for (_i = 0, _len = targetList.length; _i < _len; _i++) {
           target = targetList[_i];
           for (fileName in target) {
             lines = target[fileName];
-            aaaaa = fileName.replace(/\./g, '-');
+            idPrefix = fileName.replace(/\./g, '-');
             for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
               line = lines[_j];
-              $("#" + aaaaa + "-" + line).addClass('highlighted');
+              $("#" + idPrefix + "-" + line).addClass('highlighted');
             }
           }
         }
@@ -55,11 +57,9 @@
       };
 
       ExplanationView.prototype.renderHead = function() {
-        var el, head, length;
+        var el, length;
         length = this.model.get('sections').length;
-        head = this.model.getHead();
-        el = head.el;
-        window.aa = el;
+        el = this.model.getHead().el;
         this.$el.html(this.headTemplate({
           el: el,
           length: length,

@@ -35,7 +35,6 @@
         this.$('#app-message').text('Loading...');
         return Explanation.createAsync(id, function(explModel) {
           var targetId;
-          $('#app-message').text('');
           _this.explanation = new ExplanationView({
             model: explModel
           });

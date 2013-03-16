@@ -16,19 +16,16 @@
 
       AppRouter.prototype.routes = {
         '(index)': 'index',
-        'new': 'new',
-        ':id(/(:number))': 'show'
+        ':id': 'show',
+        ':id/(:number)': 'show'
       };
 
       AppRouter.prototype.index = function() {
         return console.log('index');
       };
 
-      AppRouter.prototype["new"] = function() {
-        return console.log('new');
-      };
-
       AppRouter.prototype.show = function(id, sectionNumber) {
+        console.log('show');
         if (this.prevId === id) {
           return this.app.render(sectionNumber);
         } else {
