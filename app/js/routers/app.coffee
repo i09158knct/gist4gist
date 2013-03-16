@@ -11,17 +11,15 @@ define 'routers/app', [
       @prevId = null
 
     routes:
-      '(index)': 'index'
-      'new':   'new'
-      ':id(/(:number))':   'show'
+      '(index)':       'index'
+      ':id':           'show'
+      ':id/(:number)': 'show'
 
     index: () ->
       console.log 'index'
 
-    new: () ->
-      console.log 'new'
-
     show: (id, sectionNumber) ->
+      console.log 'show'
       if @prevId == id
         @app.render sectionNumber
       else

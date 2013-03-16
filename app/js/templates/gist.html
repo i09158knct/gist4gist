@@ -4,9 +4,9 @@
 </p>
 <% for (var name in files) { %>
   <% var file = files[name] %>
-  <% var aaaaa = file.filename.replace(/\./g, '-') %>
-  <div class="file" id="gist-<%- aaaaa %>">
-    <h2><a target="_blank" href="<%- html_url %>#file-<%- aaaaa %>"><%- file.filename %></a></h2>
+  <% var idPrefix = file.filename.replace(/\./g, '-') %>
+  <div class="file" id="gist-<%- idPrefix %>">
+    <h2><a target="_blank" href="<%- html_url %>#file-<%- idPrefix %>"><%- file.filename %></a></h2>
     <ul>
       <li>Type: <%- file.type %></li>
       <li>Language: <%- file.language || '?' %></li>
@@ -22,7 +22,7 @@
             <pre><% for (lineNumber = 1; lineNumber <= lines.length; lineNumber++) { %><%= '<div>' + lineNumber + '</div>' %><% } %></pre>
           </td>
           <td width="100%" class="line-contents">
-            <pre><% for (lineNumber = 1; lineNumber <= lines.length; lineNumber++) { %><div id="<%- aaaaa + '-' + lineNumber %>"><%- lines[lineNumber - 1] %><%= lines[lineNumber - 1] ? '' : '<br>' %></div><% } %></pre>
+            <pre><% for (lineNumber = 1; lineNumber <= lines.length; lineNumber++) { %><div id="<%- idPrefix + '-' + lineNumber %>"><%- lines[lineNumber - 1] %><%= lines[lineNumber - 1] ? '' : '<br>' %></div><% } %></pre>
           </td>
         </tbody>
       </table>

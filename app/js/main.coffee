@@ -20,15 +20,9 @@ require.config
 require [
   'jquery'
   'routers/app'
-  'models/gist'
-  'views/gist'
-  'views/navbar'
   'lib/bootstrap.min'
-], ($, AppRouter, Gist, GistView, NavbarView) ->
+], ($, AppRouter) ->
   router = new AppRouter pushState: true
   Backbone.history.start()
 
-  window.Gist = Gist
-  window.GistView = GistView
-  window.NavbarView = NavbarView
   window.router = router

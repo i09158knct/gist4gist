@@ -13,9 +13,14 @@ module.exports = (grunt) ->
       coffee_build:
         files: ['<%= coffee.build.src %>', 'Gruntfile.coffee']
         tasks: ['coffee:build']
-        # tasks: ['coffee:build', 'copy:build']
       copy_build:
-        files: ['app/**/*.html', 'Gruntfile.coffee']
+        files: [
+          'app/**/*.html'
+          'app/**/*.js'
+          'app/**/*.css'
+          'app/**/*.png'
+          'Gruntfile.coffee'
+        ]
         tasks: ['copy:build']
       # coffee_test:
       #   files: ['<%= coffee.test.src %>', 'Gruntfile.coffee']

@@ -16,4 +16,4 @@ define 'views/navbar', [
     cahangeGist: (event) ->
       event?.preventDefault()
       id = @$('#gist-id').val()
-      document.location.hash = '/' + id
+      document.location.hash = "/#{id}"

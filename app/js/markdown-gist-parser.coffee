@@ -28,6 +28,9 @@ define 'markdown-gist-parser', [
   getHead: (el) ->
     el: $(el).find('.gist-head')[0]
 
+  # ex. "filename.txt: [1, 2, 3]"
+  findNameAndLineNumbers: /\s*(.+)\s*:\s*(\[.*\])\s*$/
+
   # type TargetList = [{filename: [linenumber]}]
   # Element -> TargetList
   extractTargetList: (ul) ->
@@ -37,9 +40,6 @@ define 'markdown-gist-parser', [
       target = {}
       target[fileName] = JSON.parse lineNumbers
       target
-
-  # ex. "filename.txt: [1, 2, 3]"
-  findNameAndLineNumbers: /\s*(.+)\s*:\s*(\[.*\])\s*$/
 
   # Element -> [{"el": Element, "targetList": TargetList}]
   getSections: (el) ->

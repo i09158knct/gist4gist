@@ -2,9 +2,10 @@ define 'models/explanation', [
   'jquery'
   'underscore'
   'backbone'
-  'gist-loader'
   'markdown-gist-parser'
-], ($, _, Backbone, GistLoader, mdgParser) ->
+  'gist-loader'
+  # 'gist-loader-mock'
+], ($, _, Backbone, mdgParser, GistLoader) ->
   loader = new GistLoader()
 
   class Explanation extends Backbone.Model

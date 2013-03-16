@@ -27,7 +27,6 @@ define 'views/app', [
       @explanation?.remove()
       @$('#app-message').text 'Loading...'
       Explanation.createAsync id, (explModel) =>
-        $('#app-message').text ''
         @explanation = new ExplanationView(model: explModel)
         targetId = explModel.getTargetId()
         Gist.createAsync targetId, (gistModel) =>

@@ -2,8 +2,14 @@
   <li class="previous">
     <a href="#/<%- thisGistId %>/<%- currentSectionNumber - 1 %>">&larr; Previous</a>
   </li>
-  <li class="next<%- length < currentSectionNumber + 1 ? ' disabled' : '' %>">
-    <a href="#/<%- thisGistId %>/<%- currentSectionNumber + 1 %>">Next &rarr;</a>
-  </li>
+  <% if (length < currentSectionNumber + 1) { %>
+    <li class="next disabled">
+      <a href="#/<%- thisGistId %>/<%- currentSectionNumber %>">Next &rarr;</a>
+    </li>
+  <% } else { %>
+    <li class="next">
+      <a href="#/<%- thisGistId %>/<%- currentSectionNumber + 1 %>">Next &rarr;</a>
+    </li>
+  <% } %>
 </ul>
 <%= el.innerHTML %>

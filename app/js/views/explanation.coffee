@@ -24,14 +24,14 @@ define 'views/explanation', [
 
     renderSection: (sectionNumber) ->
       length = @model.get('sections').length
-      section = @model.getSection sectionNumber
-      {el, targetList} = section
+      sectionNumber = length if sectionNumber > length
+      {el, targetList} = @model.getSection sectionNumber
 
       for target in targetList
         for fileName, lines of target
-          aaaaa = fileName.replace /\./g, '-'
+          idPrefix = fileName.replace /\./g, '-'
           for line in lines
-            $("##{aaaaa}-#{line}").addClass 'highlighted'
+            $("##{idPrefix}-#{line}").addClass 'highlighted'
 
       @$el.html @sectionTemplate
         el: el
@@ -42,9 +42,8 @@ define 'views/explanation', [
 
     renderHead: () ->
       length = @model.get('sections').length
-      head = @model.getHead()
-      {el} = head
-      window.aa=el
+      {el} = @model.getHead()
+
       @$el.html @headTemplate
         el: el
         length: length
