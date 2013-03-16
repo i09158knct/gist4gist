@@ -3,8 +3,8 @@ define 'models/explanation', [
   'underscore'
   'backbone'
   'markdown-gist-parser'
-  'gist-loader'
-  # 'gist-loader-mock'
+  # 'gist-loader'
+  'gist-loader-mock'
 ], ($, _, Backbone, mdgParser, GistLoader) ->
   loader = new GistLoader()
 

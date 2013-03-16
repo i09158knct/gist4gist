@@ -25,4 +25,17 @@ require [
   router = new AppRouter pushState: true
   Backbone.history.start()
 
+  sizeHolder = document.documentElement
+  $targetGist = $('#target-gist')
+  $explanation = $('#explanation')
+
+  resizeElements =  () ->
+    height = sizeHolder.clientHeight - 80
+    $targetGist.height height
+    $explanation.height height
+
+
+  $(window).on 'resize', resizeElements
+  resizeElements()
+
   window.router = router

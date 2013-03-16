@@ -2,8 +2,8 @@ define 'models/gist', [
   'jquery'
   'underscore'
   'backbone'
-  'gist-loader'
-  # 'gist-loader-mock'
+  # 'gist-loader'
+  'gist-loader-mock'
 ], ($, _, Backbone, GistLoader) ->
   loader = new GistLoader()
 

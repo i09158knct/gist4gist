@@ -1,7 +1,9 @@
-<h1><a target="_blank" href="https://gist.github.com/<%- user.login %>"><%- user.login %><a/> / <a target="_blank" href="<%- html_url %>"><%- id %></a></h1>
-<p>
-  <%- description %>
-</p>
+<div id="target-head">
+  <h1><a target="_blank" href="https://gist.github.com/<%- user.login %>"><%- user.login %><a/> / <a target="_blank" href="<%- html_url %>"><%- id %></a></h1>
+  <p>
+    <%- description %>
+  </p>
+</div>
 <% for (var name in files) { %>
   <% var file = files[name] %>
   <% var idPrefix = file.filename.replace(/\./g, '-') %>

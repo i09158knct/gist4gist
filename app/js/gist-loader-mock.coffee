@@ -67,12 +67,47 @@ define 'gist-loader-mock', [
 
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam modi consectetur libero eius quam soluta et magni nostrum eligendi blanditiis corporis obcaecati delectus esse asperiores numquam quis earum. Harum animi.
 
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est id vitae molestias placeat nihil aspernatur recusandae quidem nisi temporibus quam odit sequi eaque voluptatibus facere cupiditate blanditiis ex eum!
+
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis sint unde a suscipit delectus nam ipsum veritatis doloribus facilis enim. Officia aliquam iusto inventore et a quasi quisquam fugit impedit.
+
+                Eius ut nam illo quis doloremque praesentium architecto incidunt itaque fugit quas quidem similique necessitatibus minus aliquam quo reiciendis perferendis officiis ullam maxime consequatur sit aperiam ipsum cum excepturi exercitationem.
+
+                Voluptas officia quia in praesentium reiciendis iure rem ea id sequi dignissimos ex corporis impedit perspiciatis soluta omnis totam eius commodi dolorum vero facilis laboriosam cum enim. Nam laudantium animi!
+
+
                 3. Final
                 --------
 
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo animi amet quibusdam laudantium perspiciatis libero incidunt nulla architecto veritatis ratione qui dignissimos id. Illo totam recusandae impedit ducimus ab facere.
 
                 That's Allllllllllllllllllllllll!!!!!!!!!!!
+
+                '''
+                # Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid explicabo sed quibusdam asperiores fuga dolor dignissimos corporis dolorum dolores fugiat odit sunt rem aliquam rerum unde reprehenderit hic labore consequatur.
+            "fizzbuzz.js":
+              filename: "fizzbuzz.js"
+              type: "application/javascript"
+              language: "Markdown"
+              raw_url: "https://gist.github.com/raw/3979762/6a15d23a43f10f00b1ee52d00fabb652f53d499d/fizzbuzz.js"
+              size: 379
+              content: '''
+                function toFizzBuzz(num) {
+                  return {
+                    3:         'Fizz',
+                    5:         'Buzz',
+                    15:        'FizzBuzz',
+                    otherwise: '' + num
+                  }[(num % 15) ? (num % 5) ? (num % 3) ? 'otherwise' : 3 : 5 : 15];
+                }
+
+                var targets = (function (len) {
+                  return Array.apply(null, new Array(len)).map(function(undef, i) {
+                    return i;
+                  });
+                })(100);
+
+                console.log(targets.map(toFizzBuzz));
 
                 '''
                 # Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid explicabo sed quibusdam asperiores fuga dolor dignissimos corporis dolorum dolores fugiat odit sunt rem aliquam rerum unde reprehenderit hic labore consequatur.
