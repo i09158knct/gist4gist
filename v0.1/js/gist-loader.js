@@ -18,7 +18,7 @@
           var remaining;
           remaining = res.meta["X-RateLimit-Remaining"];
           console.log("Remaining Rate: " + remaining);
-          if (remaining === 0) {
+          if (+remaining === 0) {
             alert('0!!!!');
           }
           return typeof cb === "function" ? cb.apply(null, arguments) : void 0;

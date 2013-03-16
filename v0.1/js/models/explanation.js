@@ -11,14 +11,21 @@
       __extends(Explanation, _super);
 
       function Explanation(markdown, thisGistId) {
-        var head, waste;
+        var $plainUl, head, section, sections, ul, waste, _i, _len;
         Explanation.__super__.constructor.apply(this, arguments);
         this.attributes = mdgParser.parse(markdown);
         this._thisGistId = thisGistId;
-        head = this.getHead();
+        head = this.attributes.head;
         waste = $(head.el).find('h1');
-        if (waste.text().trim() === this.getTargetId()) {
-          waste.remove();
+        waste.remove();
+        sections = this.attributes.sections;
+        for (_i = 0, _len = sections.length; _i < _len; _i++) {
+          section = sections[_i];
+          ul = Explanation.buildHtmlTargetList(section.targetList);
+          $plainUl = $(section.el).find('h2').eq(0).next();
+          if ($plainUl[0].tagName.toLowerCase() === 'ul') {
+            $plainUl.replaceWith(ul);
+          }
         }
       }
 
@@ -41,6 +48,49 @@
         } else {
           return this.getHead();
         }
+      };
+
+      Explanation.buildHtmlListItem = function(targetName, lines) {
+        var fileButton, fileId, li, line, lineButtons, lineId, validName;
+        validName = targetName.replace(/\./g, '-').trim();
+        fileId = "gist-" + validName;
+        fileButton = ("<button class=\"js-file-link btn btn-link\" data-target=\"" + fileId + "\">") + targetName + '</button>';
+        lineId = function(line) {
+          return "" + validName + "-" + line;
+        };
+        lineButtons = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = lines.length; _i < _len; _i++) {
+            line = lines[_i];
+            _results.push(("<button class=\"js-line-link btn btn-small\" data-target=\"" + (lineId(line)) + "\">") + line + '</button>');
+          }
+          return _results;
+        })();
+        return li = '<li>' + fileButton + ' : ' + lineButtons.join(' ') + '</li>';
+      };
+
+      Explanation.buildHtmlTargetList = function(targetList) {
+        var li, lines, lis, target, targetName, ul;
+        lis = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = targetList.length; _i < _len; _i++) {
+            target = targetList[_i];
+            li = (function() {
+              var _results1;
+              _results1 = [];
+              for (targetName in target) {
+                lines = target[targetName];
+                _results1.push(this.buildHtmlListItem(targetName, lines));
+              }
+              return _results1;
+            }).call(this)[0];
+            _results.push(li);
+          }
+          return _results;
+        }).call(this);
+        return ul = '<ul class="target-list">' + lis.join('') + '</ul>';
       };
 
       Explanation.create = function(data, fileName) {

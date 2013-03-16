@@ -18,8 +18,8 @@
       AppView.prototype.el = 'body';
 
       AppView.prototype.render = function(sectionNumber) {
-        this.$('#target-gist').html(this.gist.render().el);
-        this.$('#explanation').html(this.explanation.render(sectionNumber).el);
+        this.gist.render().el;
+        this.explanation.render(sectionNumber).el;
         return this;
       };
 
@@ -38,12 +38,14 @@
           _this.explanation = new ExplanationView({
             model: explModel
           });
+          _this.explanation.setElement(_this.$('#explanation'));
           targetId = explModel.getTargetId();
           return Gist.createAsync(targetId, function(gistModel) {
             $('#app-message').text('');
             _this.gist = new GistView({
               model: gistModel
             });
+            _this.gist.setElement(_this.$('#target-gist'));
             return _this.render(sectionNumber);
           });
         });

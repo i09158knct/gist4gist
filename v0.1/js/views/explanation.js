@@ -18,8 +18,21 @@
 
       ExplanationView.prototype.headTemplate = _.template(headTemplate);
 
+      ExplanationView.prototype.events = {
+        'click .js-file-link': 'scrollToTarget',
+        'click .js-line-link': 'scrollToTarget'
+      };
+
+      ExplanationView.prototype.scrollToTarget = function(event) {
+        var $gist, $target, targetId;
+        targetId = $(event.target).data('target');
+        $target = $("#" + targetId);
+        $gist = $('#target-gist');
+        return $gist.scrollTop($gist.scrollTop() + $target.position().top - 70);
+      };
+
       ExplanationView.prototype.render = function(sectionNumber) {
-        $('.highlighted').removeClass(' highlighted');
+        $('.highlighted').removeClass('highlighted');
         sectionNumber = +sectionNumber || 0;
         if (sectionNumber !== 0) {
           this.renderSection(sectionNumber);
@@ -40,7 +53,7 @@
           target = targetList[_i];
           for (fileName in target) {
             lines = target[fileName];
-            idPrefix = fileName.replace(/\./g, '-');
+            idPrefix = fileName.replace(/\./g, '-').trim();
             for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
               line = lines[_j];
               $("#" + idPrefix + "-" + line).addClass('highlighted');
