@@ -1,11 +1,1 @@
-(function() {
-
-  define('html-builder', ['showdown'], function(Showdown) {
-    var converter;
-    converter = new Showdown.converter;
-    return function(text) {
-      return converter.makeHtml(text);
-    };
-  });
-
-}).call(this);
+(function(){define("html-builder",["showdown"],function(e){var t;return t=new e.converter,function(e){return t.makeHtml(e)}})}).call(this);

@@ -3,11 +3,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Mocha Spec Runner</title>
-    <link rel="stylesheet" href="lib/mocha/mocha.css">
+    <link rel="stylesheet" href="lib/mocha.css">
 </head>
 <body>
     <div id="mocha"></div>
-    <script src="lib/mocha/mocha.js"></script>
+    <script src="lib/mocha.js"></script>
     <script src="lib/chai.js"></script>
     <script src="../js/lib/require.js"></script>
     <script>
@@ -17,51 +17,43 @@
         expect = chai.expect;
     </script>
 
-    <!-- include source files here... -->
-    <!-- include spec files here... -->
-    <!-- <script src="spec/test.js"></script> -->
-<script>
-
-  require.config({
-    baseUrl: '../js',
-    paths: {
-      'text': 'lib/text',
-      'jquery': 'lib/jquery',
-      'underscore': 'lib/lodash',
-      'backbone': 'lib/backbone',
-      'showdown': 'lib/showdown',
-      'test': '../test',
-      'spec': '../test/spec'
-    },
-    shim: {
-      'jquery': {
-        exports: 'jQuery'
-      },
-      'underscore': {
-        exports: '_'
-      },
-      'backbone': {
-        exports: 'Backbone',
-        deps: ['jquery', 'underscore']
-      },
-      'showdown': {
-        exports: 'Showdown'
-      },
-      'lib/bootstrap.min': {
-        deps: ['jquery']
-      }
-    }
-  });
-  require(['spec/test'], function(module){
-      mocha.run();
-  });
-//   require(['spec/test'], function(test) {
-//     return mocha.run();
-//   });
-
-// }).call(this);
-
-</script>
-    <!-- <script>mocha.run()</script> -->
+    <script>
+      require.config({
+        baseUrl: '../js',
+        paths: {
+          'text': 'lib/text',
+          'jquery': 'lib/jquery',
+          'underscore': 'lib/lodash',
+          'backbone': 'lib/backbone',
+          'showdown': 'lib/showdown',
+          'test': '../test',
+          'spec': '../test/spec'
+        },
+        shim: {
+          'jquery': {
+            exports: 'jQuery'
+          },
+          'underscore': {
+            exports: '_'
+          },
+          'backbone': {
+            exports: 'Backbone',
+            deps: ['jquery', 'underscore']
+          },
+          'showdown': {
+            exports: 'Showdown'
+          },
+          'lib/bootstrap.min': {
+            deps: ['jquery']
+          }
+        }
+      });
+      require([
+        'spec/html-builder-spec',
+        'spec/markdown-gist-parser-spec'
+      ], function(){
+          mocha.run();
+      });
+    </script>
 </body>
 </html>
