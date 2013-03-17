@@ -18,8 +18,8 @@
       AppView.prototype.el = 'body';
 
       AppView.prototype.render = function(sectionNumber) {
-        this.gist.render().el;
-        this.explanation.render(sectionNumber).el;
+        this.gist.render();
+        this.explanation.render(sectionNumber);
         return this;
       };
 
@@ -36,16 +36,16 @@
         return Explanation.createAsync(id, function(explModel) {
           var targetId;
           _this.explanation = new ExplanationView({
-            model: explModel
+            model: explModel,
+            el: _this.$('#explanation')
           });
-          _this.explanation.setElement(_this.$('#explanation'));
           targetId = explModel.getTargetId();
           return Gist.createAsync(targetId, function(gistModel) {
             $('#app-message').text('');
             _this.gist = new GistView({
-              model: gistModel
+              model: gistModel,
+              el: _this.$('#target-gist')
             });
-            _this.gist.setElement(_this.$('#target-gist'));
             return _this.render(sectionNumber);
           });
         });

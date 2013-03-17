@@ -12,8 +12,6 @@
         ExplanationView.__super__.constructor.apply(this, arguments);
       }
 
-      ExplanationView.prototype.tagName = 'div';
-
       ExplanationView.prototype.sectionTemplate = _.template(sectionTemplate);
 
       ExplanationView.prototype.headTemplate = _.template(headTemplate);
@@ -32,7 +30,7 @@
       };
 
       ExplanationView.prototype.render = function(sectionNumber) {
-        $('.highlighted').removeClass('highlighted');
+        ExplanationView.disableHighlighting();
         sectionNumber = +sectionNumber || 0;
         if (sectionNumber !== 0) {
           this.renderSection(sectionNumber);
@@ -43,23 +41,13 @@
       };
 
       ExplanationView.prototype.renderSection = function(sectionNumber) {
-        var el, fileName, idPrefix, length, line, lines, target, targetList, _i, _j, _len, _len1, _ref;
+        var el, length, targetList, _ref;
         length = this.model.get('sections').length;
         if (sectionNumber > length) {
           sectionNumber = length;
         }
         _ref = this.model.getSection(sectionNumber), el = _ref.el, targetList = _ref.targetList;
-        for (_i = 0, _len = targetList.length; _i < _len; _i++) {
-          target = targetList[_i];
-          for (fileName in target) {
-            lines = target[fileName];
-            idPrefix = fileName.replace(/\./g, '-').trim();
-            for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
-              line = lines[_j];
-              $("#" + idPrefix + "-" + line).addClass('highlighted');
-            }
-          }
-        }
+        ExplanationView.highlightTargets(targetList);
         this.$el.html(this.sectionTemplate({
           el: el,
           length: length,
@@ -79,6 +67,30 @@
           thisGistId: this.model.getGistId()
         }));
         return this;
+      };
+
+      ExplanationView.disableHighlighting = function() {
+        return $('.highlighted').removeClass('highlighted');
+      };
+
+      ExplanationView.highlightTargets = function(targetList) {
+        var fileName, idPrefix, line, lines, target, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = targetList.length; _i < _len; _i++) {
+          target = targetList[_i];
+          fileName = target[0], lines = target[1];
+          idPrefix = fileName.replace(/\./g, '-').trim();
+          _results.push((function() {
+            var _j, _len1, _results1;
+            _results1 = [];
+            for (_j = 0, _len1 = lines.length; _j < _len1; _j++) {
+              line = lines[_j];
+              _results1.push($("#" + idPrefix + "-" + line).addClass('highlighted'));
+            }
+            return _results1;
+          })());
+        }
+        return _results;
       };
 
       return ExplanationView;

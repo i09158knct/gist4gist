@@ -27,7 +27,7 @@
           _this = this;
         _ref = ul.children, lis = 1 <= _ref.length ? __slice.call(_ref, 0) : [];
         return lis.map(function(li) {
-          var fileName, lineNumbers, target, __all, _ref1, _ref2;
+          var fileName, lineNumbers, __all, _ref1, _ref2;
           if (li.innerText != null) {
             _ref1 = li.innerText.match(_this.findNameAndLineNumbers), __all = _ref1[0], fileName = _ref1[1], lineNumbers = _ref1[2];
           } else if (li.textContent != null) {
@@ -35,9 +35,7 @@
           } else {
             throw new Error('Cannot use "innerText" and "textContent".');
           }
-          target = {};
-          target[fileName] = JSON.parse(lineNumbers);
-          return target;
+          return [fileName, JSON.parse(lineNumbers)];
         });
       },
       getSections: function(el) {

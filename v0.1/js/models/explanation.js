@@ -71,22 +71,13 @@
       };
 
       Explanation.buildHtmlTargetList = function(targetList) {
-        var li, lines, lis, target, targetName, ul;
+        var lis, target, ul;
         lis = (function() {
           var _i, _len, _results;
           _results = [];
           for (_i = 0, _len = targetList.length; _i < _len; _i++) {
             target = targetList[_i];
-            li = (function() {
-              var _results1;
-              _results1 = [];
-              for (targetName in target) {
-                lines = target[targetName];
-                _results1.push(this.buildHtmlListItem(targetName, lines));
-              }
-              return _results1;
-            }).call(this)[0];
-            _results.push(li);
+            _results.push(this.buildHtmlListItem.apply(this, target));
           }
           return _results;
         }).call(this);

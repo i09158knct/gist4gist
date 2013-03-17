@@ -12,8 +12,6 @@
         GistView.__super__.constructor.apply(this, arguments);
       }
 
-      GistView.prototype.tagName = 'div';
-
       GistView.prototype.template = _.template(template);
 
       GistView.prototype.render = function() {
