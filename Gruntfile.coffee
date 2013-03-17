@@ -10,22 +10,33 @@ module.exports = (grunt) ->
       livereload:
         files: ['build/**/*']
         tasks: ['livereload']
+
       coffee_build:
-        files: ['<%= coffee.build.src %>', 'Gruntfile.coffee']
+        files: [
+          '<%= coffee.build.cwd %>/<%= coffee.build.src %>'
+          'Gruntfile.coffee'
+        ]
         tasks: ['coffee:build']
       copy_build:
         files: [
-          'app/**/*.html'
-          'app/**/*.js'
-          'app/**/*.css'
-          'app/**/*.png'
+          '<%= copy.build.cwd %>/<%= copy.build.src %>'
           'Gruntfile.coffee'
         ]
         tasks: ['copy:build']
-      # coffee_test:
-      #   files: ['<%= coffee.test.src %>', 'Gruntfile.coffee']
-      #   tasks: ['coffee:test']
-        # tasks: ['coffee:test', 'copy:test']
+
+      coffee_test:
+        files: [
+          '<%= coffee.test.cwd %>/<%= coffee.test.src %>'
+          'Gruntfile.coffee'
+        ]
+        tasks: ['coffee:test']
+      copy_test:
+        files: [
+          '<%= copy.test.cwd %>/<%= copy.test.src %>'
+          'Gruntfile.coffee'
+        ]
+        tasks: ['copy:test']
+
 
     copy:
       build:
@@ -38,6 +49,7 @@ module.exports = (grunt) ->
         cwd: 'test'
         src: '**/*{.html,.js,.css,.png}'
         dest: 'build/test'
+
 
     coffee:
       build:
@@ -53,6 +65,7 @@ module.exports = (grunt) ->
         dest: 'build/test'
         ext: '.js'
 
+
     connect:
       options:
         port: 9999
@@ -61,9 +74,12 @@ module.exports = (grunt) ->
           middleware: (connect, options) ->
             [livereloadSnippet, (folderMount connect, './build')]
 
+
     exec:
       testacular:
         command: 'testacular start &'
+
+
 
   [
     'grunt-exec'
@@ -73,37 +89,53 @@ module.exports = (grunt) ->
     'grunt-contrib-copy'
     'grunt-regarde'
   ].forEach grunt.loadNpmTasks
-
   grunt.renameTask 'regarde', 'watch'
 
   grunt.registerTask 'copy-components', () ->
-    grunt.file.mkdir 'build/js/lib'
-    component = grunt.file.readJSON 'component.json'
-    for name of component.dependencies
-      try
-        grunt.file.copy "components/#{name}/#{name}.js", "build/js/lib/#{name}.js"
-      catch e
-        console.log "Error: #{name}.js not found"
-        console.log e
+    assets =
+      'build/js/lib': [
+        'components/underscore/underscore.js'
+        'components/requirejs/require.js'
+        'components/bootstrap/docs/assets/js/bootstrap.min.js'
+        'components/showdown/src/showdown.js'
+        'components/backbone/backbone.js'
+        'components/jquery/jquery.js'
+        'components/lodash/lodash.js'
+        'components/text/text.js'
+      ]
+      'build/css': [
+        'components/bootstrap/docs/assets/css/bootstrap.css'
+      ]
+      'build/img': [
+      ]
+      'test/lib': [
+        'node_modules/mocha/mocha.js'
+        'node_modules/mocha/mocha.css'
+        'node_modules/chai/chai.js'
+      ]
+
+    for pathName, sources of assets
+      grunt.file.mkdir pathName
+      for source in sources
+        fileName = path.basename source
+        grunt.log.writeln "copying #{fileName}"
+        grunt.file.copy source, "#{pathName}/#{fileName}"
 
   grunt.registerTask 'default', [
-    'livereload-start'
-    'connect'
-    'watch'
-    # 'watch:copy_build'
-    # 'watch:coffee_build'
-    # 'watch:livereload'
-  ]
-
-  grunt.registerTask 'test-mode', [
     'exec:testacular'
     'livereload-start'
     'connect'
     'watch'
   ]
 
+  grunt.registerTask 'run', [
+    'livereload-start'
+    'connect'
+    'watch'
+  ]
+
   grunt.registerTask 'initialize', [
-    'copy'
-    'coffee'
     'copy-components'
+    'coffee'
+    'copy'
   ]
