@@ -18,20 +18,25 @@ define 'views/app', [
     el: 'body'
 
     render: (sectionNumber) ->
-      @gist.render().el
-      @explanation.render(sectionNumber).el
+      @gist.render()
+      @explanation.render(sectionNumber)
       @
 
     changeGist: (id, sectionNumber) ->
       @gist?.remove()
       @explanation?.remove()
       @$('#app-message').text 'Loading...'
+
       Explanation.createAsync id, (explModel) =>
-        @explanation = new ExplanationView(model: explModel)
-        @explanation.setElement @$('#explanation')
+        @explanation = new ExplanationView
+          model: explModel
+          el: @$('#explanation')
+
         targetId = explModel.getTargetId()
         Gist.createAsync targetId, (gistModel) =>
           $('#app-message').text ''
-          @gist = new GistView(model: gistModel)
-          @gist.setElement @$('#target-gist')
+          @gist = new GistView
+            model: gistModel
+            el: @$('#target-gist')
+
           @render sectionNumber

@@ -8,7 +8,6 @@ define 'views/gist', [
     constructor: (options) ->
       super
 
-    tagName: 'div'
     template: _.template template
 
     render: () ->

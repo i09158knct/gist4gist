@@ -11,5 +11,12 @@ define 'gist-loader', [
       @_loader url, (res) ->
         remaining = res.meta["X-RateLimit-Remaining"]
         console.log "Remaining Rate: #{remaining}"
-        alert '0!!!!' if +remaining == 0
+        if +remaining == 0
+          alert '''
+            Error: Failed to get the Gist.
+            You've run out of GitHub API rate limit.
+
+            Please refer to http://developer.github.com/v3/
+            '''
+          console.log res
         cb? arguments...

@@ -39,6 +39,8 @@ define 'models/gist', [
       user:
         login: 'Unknown User'
 
+
+
     @normalize: (attrs) ->
       {id, user:{login}} = attrs
       attrs.html_url = "https://gist.github.com/#{login}/#{id}"

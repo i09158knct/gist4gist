@@ -9,7 +9,6 @@ define 'views/explanation', [
     constructor: (options) ->
       super
 
-    tagName: 'div'
     sectionTemplate: _.template sectionTemplate
     headTemplate: _.template headTemplate
 
@@ -25,7 +24,7 @@ define 'views/explanation', [
 
 
     render: (sectionNumber) ->
-      $('.highlighted').removeClass 'highlighted'
+      ExplanationView.disableHighlighting()
       sectionNumber = +sectionNumber || 0
       if sectionNumber != 0
         @renderSection sectionNumber
@@ -38,11 +37,7 @@ define 'views/explanation', [
       sectionNumber = length if sectionNumber > length
       {el, targetList} = @model.getSection sectionNumber
 
-      for target in targetList
-        for fileName, lines of target
-          idPrefix = fileName.replace(/\./g, '-').trim()
-          for line in lines
-            $("##{idPrefix}-#{line}").addClass 'highlighted'
+      ExplanationView.highlightTargets targetList
 
       @$el.html @sectionTemplate
         el: el
@@ -60,3 +55,15 @@ define 'views/explanation', [
         length: length
         thisGistId: @model.getGistId()
       @
+
+
+
+    @disableHighlighting: () ->
+      $('.highlighted').removeClass 'highlighted'
+
+    @highlightTargets: (targetList) ->
+      for target in targetList
+        [fileName, lines] = target
+        idPrefix = fileName.replace(/\./g, '-').trim()
+        for line in lines
+          $("##{idPrefix}-#{line}").addClass 'highlighted'

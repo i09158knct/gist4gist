@@ -42,9 +42,7 @@ define 'markdown-gist-parser', [
         [__all, fileName, lineNumbers] = li.textContent.match @findNameAndLineNumbers
       else
         throw new Error('Cannot use "innerText" and "textContent".')
-      target = {}
-      target[fileName] = JSON.parse lineNumbers
-      target
+      [fileName, (JSON.parse lineNumbers)]
 
   # Element -> [{"el": Element, "targetList": TargetList}]
   getSections: (el) ->

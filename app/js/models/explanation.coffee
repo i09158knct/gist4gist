@@ -41,6 +41,8 @@ define 'models/explanation', [
       else
         @getHead()
 
+
+
     @buildHtmlListItem: (targetName, lines) ->
       validName = targetName.replace(/\./g, '-').trim()
       fileId = "gist-#{validName}"
@@ -58,13 +60,7 @@ define 'models/explanation', [
 
     @buildHtmlTargetList: (targetList) ->
       lis = for target in targetList
-
-        # target is simple object like key-value pair.
-        # Therefore, returned value of for-of will always be 1 element array.
-        [li] = for targetName, lines of target
-          @buildHtmlListItem targetName, lines
-        li
-
+        @buildHtmlListItem target...
       ul = '<ul class="target-list">' + lis.join('') + '</ul>'
 
 
