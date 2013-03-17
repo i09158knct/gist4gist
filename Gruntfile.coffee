@@ -49,6 +49,11 @@ module.exports = (grunt) ->
         cwd: 'test'
         src: '**/*{.html,.js,.css,.png}'
         dest: 'build/test'
+      dist:
+        expand: true
+        cwd: 'build'
+        src: '**/*{.html,.css,.png}'
+        dest: 'dist'
 
 
     coffee:
@@ -69,15 +74,21 @@ module.exports = (grunt) ->
     connect:
       options:
         port: 9999
-      livereload:
+      build:
         options:
           middleware: (connect, options) ->
             [livereloadSnippet, (folderMount connect, './build')]
+      dist:
+        options:
+          middleware: (connect, options) ->
+            [livereloadSnippet, (folderMount connect, './dist')]
 
 
     exec:
       testacular:
         command: 'testacular start &'
+      rjs:
+        command: 'node node_modules/requirejs/bin/r.js -o rconfig.js'
 
 
 
@@ -90,6 +101,7 @@ module.exports = (grunt) ->
     'grunt-regarde'
   ].forEach grunt.loadNpmTasks
   grunt.renameTask 'regarde', 'watch'
+
 
   grunt.registerTask 'copy-components', () ->
     assets =
@@ -107,6 +119,8 @@ module.exports = (grunt) ->
         'components/bootstrap/docs/assets/css/bootstrap.css'
       ]
       'build/img': [
+        'components/bootstrap/docs/assets/img/glyphicons-halflings.png'
+        'components/bootstrap/docs/assets/img/glyphicons-halflings-white.png'
       ]
       'test/lib': [
         'node_modules/mocha/mocha.js'
@@ -121,21 +135,34 @@ module.exports = (grunt) ->
         grunt.log.writeln "copying #{fileName}"
         grunt.file.copy source, "#{pathName}/#{fileName}"
 
-  grunt.registerTask 'default', [
-    'exec:testacular'
-    'livereload-start'
-    'connect'
-    'watch'
-  ]
-
-  grunt.registerTask 'run', [
-    'livereload-start'
-    'connect'
-    'watch'
-  ]
 
   grunt.registerTask 'initialize', [
     'copy-components'
     'coffee'
     'copy'
+  ]
+
+  grunt.registerTask 'default', [
+    'exec:testacular'
+    'livereload-start'
+    'connect:build'
+    'watch'
+  ]
+
+  grunt.registerTask 'server-build', [
+    'livereload-start'
+    'connect:build'
+    'watch'
+  ]
+
+  grunt.registerTask 'dist', [
+    'initialize'
+    'copy:dist'
+    'exec:rjs'
+  ]
+
+  grunt.registerTask 'server-dist', [
+    'livereload-start'
+    'connect:dist'
+    'watch'
   ]
