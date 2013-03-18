@@ -27,7 +27,7 @@
         var targetLineId = function(line) { return validName + '-' + line; }
       %>
       <li>
-        <button class="js-file-link btn btn-link" data-target="<%- targetFileId %>"><%- targetName %></button> :
+        <button class="js-file-link btn btn-link" data-target="<%- targetFileId %>"><%- targetName %></button><%= (lines.length > 0) ? ' : ' : '' %>
         <% for (var j = 0; j < lines.length; j++) { %>
           <% var line = lines[j]; %>
           <button class="js-line-link btn btn-small" data-target="<%- targetLineId(line) %>"><%- line %></button>
