@@ -45,23 +45,36 @@ define 'models/explanation', [
 
     @buildHtmlListItem: (targetName, lines) ->
       validName = targetName.replace(/\./g, '-').trim()
+
       fileId = "gist-#{validName}"
-      fileButton =
-        "<button class=\"js-file-link btn btn-link\" data-target=\"#{fileId}\">" +
-        targetName +
-        '</button>'
+      fileButton = do () ->
+        $button = $ document.createElement 'button'
+        $button.addClass 'js-file-link btn btn-link'
+        $button.attr 'data-target', fileId
+        $button.text targetName
+        $button[0]
+
       lineId = (line) -> "#{validName}-#{line}"
       lineButtons = for line in lines
-        "<button class=\"js-line-link btn btn-small\" data-target=\"#{lineId(line)}\">" +
-        line +
-        '</button>'
-      li =
-        '<li>' + fileButton + ' : ' + lineButtons.join(' ') + '</li>'
+        $button = $ document.createElement 'button'
+        $button.addClass 'js-line-link btn btn-small'
+        $button.attr 'data-target', (lineId line)
+        $button.text line
+        $button[0]
+
+      li = do () ->
+        $li = $ document.createElement 'li'
+        $li.append fileButton, ' : ', lineButtons...
+        $li[0]
 
     @buildHtmlTargetList: (targetList) ->
       lis = for target in targetList
         @buildHtmlListItem target...
-      ul = '<ul class="target-list">' + lis.join('') + '</ul>'
+      ul = do () ->
+        $ul = $ document.createElement 'ul'
+        $ul.addClass 'target-list'
+        $ul.append lis
+        $ul[0]
 
 
     @create: (data, fileName='explanation.md') ->
