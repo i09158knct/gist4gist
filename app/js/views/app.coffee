@@ -34,7 +34,7 @@ define 'views/app', [
 
         targetId = explModel.getTargetId()
         Gist.createAsync targetId, (gistModel) =>
-          $('#app-message').text ''
+          @$('#app-message').text ''
           @gist = new GistView
             model: gistModel
             el: @$('#target-gist')
