@@ -35,13 +35,15 @@ define 'views/explanation', [
     renderSection: (sectionNumber) ->
       length = @model.get('sections').length
       sectionNumber = length if sectionNumber > length
-      {el, targetList} = @model.getSection sectionNumber
+      {el, targetList, caption} = @model.getSection sectionNumber
 
       ExplanationView.highlightTargets targetList
 
       @$el.html @sectionTemplate
         el: el
         length: length
+        targetList: targetList
+        caption: caption
         thisGistId: @model.getGistId()
         currentSectionNumber: sectionNumber
       @

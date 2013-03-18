@@ -12,4 +12,29 @@
     </li>
   <% } %>
 </ul>
-<%= el.innerHTML %>
+<div class="article">
+  <h1><%- caption %></h1>
+  <ul class="target-list">
+    <% for (var i = 0; i < targetList.length; i++) { %>
+      <%
+        var target = targetList[i];
+        var targetName = target[0];
+        var lines = target[1];
+
+        var validName = targetName.replace(/\./g, '-').trim();
+
+        var targetFileId = 'gist-' + validName
+        var targetLineId = function(line) { return validName + '-' + line; }
+      %>
+      <li>
+        <button class="js-file-link btn btn-link" data-target="<%- targetFileId %>"><%- targetName %></button> :
+        <% for (var j = 0; j < lines.length; j++) { %>
+          <% var line = lines[j]; %>
+          <button class="js-line-link btn btn-small" data-target="<%- targetLineId(line) %>"><%- line %></button>
+          <%-  %>
+        <% } %>
+      </li>
+    <% } %>
+  </ul>
+  <%= el.innerHTML %>
+</div>

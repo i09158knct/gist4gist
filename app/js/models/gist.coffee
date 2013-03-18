@@ -10,7 +10,6 @@ define 'models/gist', [
   class Gist extends Backbone.Model
     constructor: () ->
       super
-
       attrs =
         id:          @attributes.id
         html_url:    @attributes.html_url

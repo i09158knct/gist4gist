@@ -11,25 +11,26 @@ define 'models/explanation', [
   class Explanation extends Backbone.Model
     constructor: (markdown, thisGistId) ->
       super
-      @attributes = mdgParser.parse markdown
-      @_thisGistId = thisGistId
+      article = mdgParser.parse markdown
 
-      head = @attributes.head
-      waste = $(head.el).find('h1')
-      waste.remove()
+      do () ->
+        targetGistIdHolder = $(article.head.el).find('h1').first()
+        targetGistIdHolder.remove()
 
-      sections = @attributes.sections
-      for section in sections
-        ul = Explanation.buildHtmlTargetList section.targetList
-        $plainUl = $(section.el).find('h2').eq(0).next()
-        if $plainUl[0].tagName.toLowerCase() == 'ul'
-          $plainUl.replaceWith(ul)
+      sections = for section in article.sections
+        Explanation.reconstructSection section, true
+
+      @attributes =
+        targetId:   article.gistId
+        thisGistId: thisGistId
+        head:       article.head
+        sections:   sections
 
     getGistId: () ->
-      @_thisGistId
+      @attributes.thisGistId
 
     getTargetId: () ->
-      @attributes.gistId
+      @attributes.targetId
 
     getHead: () ->
       @attributes.head
@@ -43,38 +44,23 @@ define 'models/explanation', [
 
 
 
-    @buildHtmlListItem: (targetName, lines) ->
-      validName = targetName.replace(/\./g, '-').trim()
+    @reconstructSection: ({targetList, el}, destruct=false) ->
+      if destruct
+        $el = $(el)
+      else
+        $el = $(el).clone()
 
-      fileId = "gist-#{validName}"
-      fileButton = do () ->
-        $button = $ document.createElement 'button'
-        $button.addClass 'js-file-link btn btn-link'
-        $button.attr 'data-target', fileId
-        $button.text targetName
-        $button[0]
+      $caption = $el.find('h2').first()
+      $targetList = $caption.next()
+      caption = $caption.text()
 
-      lineId = (line) -> "#{validName}-#{line}"
-      lineButtons = for line in lines
-        $button = $ document.createElement 'button'
-        $button.addClass 'js-line-link btn btn-small'
-        $button.attr 'data-target', (lineId line)
-        $button.text line
-        $button[0]
+      $caption.remove()
+      $targetList.remove() if $targetList[0].tagName.toLowerCase() == 'ul'
 
-      li = do () ->
-        $li = $ document.createElement 'li'
-        $li.append fileButton, ' : ', lineButtons...
-        $li[0]
-
-    @buildHtmlTargetList: (targetList) ->
-      lis = for target in targetList
-        @buildHtmlListItem target...
-      ul = do () ->
-        $ul = $ document.createElement 'ul'
-        $ul.addClass 'target-list'
-        $ul.append lis
-        $ul[0]
+      struct =
+        caption: caption
+        targetList: targetList
+        el: el
 
 
     @create: (data, fileName='explanation.md') ->
