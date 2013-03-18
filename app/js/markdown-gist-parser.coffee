@@ -31,7 +31,7 @@ define 'markdown-gist-parser', [
   # ex. "filename.txt: [1, 2, 3]"
   findNameAndLineNumbers: /\s*(.+)\s*:\s*(\[.*\])\s*$/
 
-  # type TargetList = [{filename: [linenumber]}]
+  # type TargetList = [[filename, linenumber]]
   # Element -> TargetList
   extractTargetList: (ul) ->
     [lis...] = ul.children
