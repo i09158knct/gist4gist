@@ -60,7 +60,7 @@ define 'models/explanation', [
       struct =
         caption: caption
         targetList: targetList
-        el: el
+        el: $el[0]
 
 
     @create: (data, fileName='explanation.md') ->
