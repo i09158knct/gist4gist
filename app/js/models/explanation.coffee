@@ -21,10 +21,10 @@ define 'models/explanation', [
         Explanation.reconstructSection section, true
 
       @attributes =
-        targetId:   article.gistId
-        thisGistId: thisGistId
-        head:       article.head
-        sections:   sections
+        targetId   : article.gistId
+        thisGistId : thisGistId
+        head       : article.head
+        sections   : sections
 
     getGistId: () ->
       @attributes.thisGistId

@@ -11,9 +11,9 @@ define 'routers/app', [
       @prevId = null
 
     routes:
-      '(index)':       'index'
-      ':id':           'show'
-      ':id/(:number)': 'show'
+      '(index)'       : 'index'
+      ':id'           : 'show'
+      ':id/(:number)' : 'show'
 
     index: () ->
       console.log 'index'

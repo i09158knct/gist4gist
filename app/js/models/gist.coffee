@@ -11,11 +11,11 @@ define 'models/gist', [
     constructor: () ->
       super
       attrs =
-        id:          @attributes.id
-        html_url:    @attributes.html_url
-        description: @attributes.description
-        files:       @attributes.files
-        user:        @attributes.user
+        id          : @attributes.id
+        html_url    : @attributes.html_url
+        description : @attributes.description
+        files       : @attributes.files
+        user        : @attributes.user
 
       if attrs.user?
         Gist.normalize attrs
